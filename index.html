@@ -89,7 +89,10 @@
           </p>
         </div>
 
-        <form id="leadForm" action="https://script.google.com/a/macros/industrybuying.com/s/AKfycbzzDJic_xfrd0zOVYp7zO6gUiHLQoO-8Z7xNln_YykWeh5LhCHvJMtFLvV9w3_WdnLd/exec" method="POST" class="space-y-4">
+        <!-- iframe for background submission (CORS bypass) -->
+        <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted){showSuccess();}"></iframe>
+
+        <form id="leadForm" action="https://script.google.com/a/macros/industrybuying.com/s/AKfycbzzDJic_xfrd0zOVYp7zO6gUiHLQoO-8Z7xNln_YykWeh5LhCHvJMtFLvV9w3_WdnLd/exec" method="POST" target="hidden_iframe" class="space-y-4">
           
           <!-- ご相談種別の選択 -->
           <div>
@@ -143,6 +146,11 @@
             <textarea name="content" rows="4" required placeholder="【記入例】&#10;・現在日本から持ち込んでいる備品の現地切り替えについて話を聞きたい&#10;・日本のモノタロウ品番：12345678の見積もりがほしい&#10;・オンライン（Teams/Zoom）で一度調達の流れを説明してほしい" class="w-full px-3 py-2 text-sm border border-slate-300 rounded focus:ring-2 focus:ring-monotaro-red focus:outline-none"></textarea>
           </div>
 
+          <!-- Hidden inputs for file base64 data -->
+          <input type="hidden" name="fileData" id="fileData">
+          <input type="hidden" name="fileName" id="fileName">
+          <input type="hidden" name="fileType" id="fileType">
+
           <div class="bg-white p-4 rounded-lg border border-dashed border-slate-300">
             <label class="block text-xs font-bold text-slate-700 mb-1">
               <i class="fa-solid fa-file-excel text-emerald-600 mr-1"></i> 購買希望リストの添付（任意：Excel / CSV / 画像）
@@ -167,49 +175,40 @@
 
   <!-- JavaScript for Form Submission & File Handling -->
   <script>
+    let submitted = false;
     const form = document.getElementById('leadForm');
     const submitBtn = document.getElementById('submitBtn');
     const successMessage = document.getElementById('successMessage');
     const fileInput = document.getElementById('fileInput');
 
-    form.addEventListener('submit', async function(e) {
-      e.preventDefault();
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 送信中...';
-
-      const formData = new FormData(form);
+    form.addEventListener('submit', function(e) {
       const file = fileInput.files[0];
-
-      // ファイルが添付されている場合はBase64化して追加
       if (file) {
+        e.preventDefault();
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 送信中...';
+
         const reader = new FileReader();
-        reader.onload = async function(event) {
-          const base64Data = event.target.result;
-          formData.append('fileData', base64Data);
-          formData.append('fileName', file.name);
-          formData.append('fileType', file.type);
-          await sendData(formData);
+        reader.onload = function(event) {
+          document.getElementById('fileData').value = event.target.result;
+          document.getElementById('fileName').value = file.name;
+          document.getElementById('fileType').value = file.type;
+          
+          submitted = true;
+          form.submit();
         };
         reader.readAsDataURL(file);
       } else {
-        await sendData(formData);
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 送信中...';
+        submitted = true;
       }
     });
 
-    async function sendData(formData) {
-      try {
-        await fetch(form.action, {
-          method: 'POST',
-          body: formData
-        });
-        form.reset();
-        form.classList.add('hidden');
-        successMessage.classList.remove('hidden');
-      } catch (error) {
-        alert('送信処理中にエラーが発生しました。時間をおいて再度お試しください。');
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane mr-2"></i> この内容で相談・お問い合わせをする（無料）';
-      }
+    function showSuccess() {
+      form.reset();
+      form.classList.add('hidden');
+      successMessage.classList.remove('hidden');
     }
   </script>
 
