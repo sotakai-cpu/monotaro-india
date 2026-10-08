@@ -135,4 +135,204 @@
     <div class="max-w-4xl mx-auto px-4">
       <div class="bg-gradient-to-r from-red-50 via-white to-orange-50 border-2 border-monotaro rounded-2xl p-6 sm:p-8 shadow-xl">
         <div class="text-center mb-6">
-          <h2 class="text-xl sm:text-2xl font-black text-slate-
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 mb-2">
+            <i class="fa-solid fa-file-pen text-monotaro-red mr-2"></i>
+            お問い合わせ・ご相談・お見積りフォーム
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-600">
+            具体的な見積依頼はもちろん、「まずは調達方法について一度話を聞いてみたい」という場合もお気軽にご連絡ください。
+          </p>
+        </div>
+
+        <!-- iframe for background submission -->
+        <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted){showSuccess();}"></iframe>
+
+        <form id="leadForm" action="https://script.google.com/a/macros/industrybuying.com/s/AKfycbzzDJic_xfrd0zOVYp7zO6gUiHLQoO-8Z7xNln_YykWeh5LhCHvJMtFLvV9w3_WdnLd/exec" method="POST" target="hidden_iframe" class="space-y-4">
+          
+          <!-- ご相談種別の選択 -->
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">
+              お問い合わせ・ご相談の目的（複数選択可） <span class="text-red-500">*</span>
+            </label>
+            <p id="purposeError" class="text-xs text-red-600 font-bold hidden mb-2">※少なくとも1つの目的を選択してください。</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+              <label class="flex items-center p-3 bg-white border border-slate-300 rounded-lg cursor-pointer hover:border-monotaro-red">
+                <input type="checkbox" name="purpose" value="まずは一度話を聞いてみたい（相談）" class="purpose-checkbox text-monotaro-red rounded focus:ring-monotaro-red mr-2">
+                <span class="font-bold text-slate-800">まずは一度話を聞いてみたい（相談）</span>
+              </label>
+              <label class="flex items-center p-3 bg-white border border-slate-300 rounded-lg cursor-pointer hover:border-monotaro-red">
+                <input type="checkbox" name="purpose" value="モノタロウ商品の見積・輸入可否確認" class="purpose-checkbox text-monotaro-red rounded focus:ring-monotaro-red mr-2">
+                <span class="font-bold text-slate-800">モノタロウ商品の見積・輸入可否確認</span>
+              </label>
+              <label class="flex items-center p-3 bg-white border border-slate-300 rounded-lg cursor-pointer hover:border-monotaro-red">
+                <input type="checkbox" name="purpose" value="Excelリスト等からの一括見積り依頼" class="purpose-checkbox text-monotaro-red rounded focus:ring-monotaro-red mr-2">
+                <span class="font-bold text-slate-800">Excelリスト等からの一括見積り依頼</span>
+              </label>
+              <label class="flex items-center p-3 bg-white border border-slate-300 rounded-lg cursor-pointer hover:border-monotaro-red">
+                <input type="checkbox" name="purpose" value="現地倉庫（Haryana）での保管・定期配送の相談" class="purpose-checkbox text-monotaro-red rounded focus:ring-monotaro-red mr-2">
+                <span class="font-bold text-slate-800">現地倉庫（Haryana）での保管・定期配送の相談</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">貴社名 <span class="text-red-500">*</span></label>
+              <input type="text" name="company" required placeholder="例：〇〇インド株式会社" class="w-full px-3 py-2 text-sm border border-slate-300 rounded focus:ring-2 focus:ring-monotaro-red focus:outline-none">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">ご担当者様お名前 <span class="text-red-500">*</span></label>
+              <input type="text" name="name" required placeholder="例：山田 太郎" class="w-full px-3 py-2 text-sm border border-slate-300 rounded focus:ring-2 focus:ring-monotaro-red focus:outline-none">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">メールアドレス <span class="text-red-500">*</span></label>
+              <input type="email" name="email" required placeholder="name@company.com" class="w-full px-3 py-2 text-sm border border-slate-300 rounded focus:ring-2 focus:ring-monotaro-red focus:outline-none">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">お電話番号</label>
+              <input type="tel" name="phone" placeholder="+91 99999 99999" class="w-full px-3 py-2 text-sm border border-slate-300 rounded focus:ring-2 focus:ring-monotaro-red focus:outline-none">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">
+              ご相談・お問い合わせ内容（自由記述） <span class="text-red-500">*</span>
+            </label>
+            <textarea name="content" rows="4" required placeholder="【記入例】&#10;・現在日本から持ち込んでいる備品の現地切り替えについて話を聞きたい&#10;・モノタロウ品番：12345678の見積もりがほしい&#10;・オンライン（Teams/Zoom）で一度調達の流れを説明してほしい" class="w-full px-3 py-2 text-sm border border-slate-300 rounded focus:ring-2 focus:ring-monotaro-red focus:outline-none"></textarea>
+          </div>
+
+          <!-- Hidden inputs for file base64 data -->
+          <input type="hidden" name="fileData" id="fileData">
+          <input type="hidden" name="fileName" id="fileName">
+          <input type="hidden" name="fileType" id="fileType">
+
+          <div class="bg-white p-4 rounded-lg border border-dashed border-slate-300">
+            <label class="block text-xs font-bold text-slate-700 mb-1">
+              <i class="fa-solid fa-file-excel text-emerald-600 mr-1"></i> 購買希望リストの添付（任意：Excel / CSV / 画像）
+            </label>
+            <input type="file" id="fileInput" class="text-xs text-slate-500 file:mr-4 file:py-1.5 file:px-3 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200">
+            <p class="text-[11px] text-slate-500 mt-1">※購入希望リストがある場合はそのまま添付いただけます。</p>
+          </div>
+
+          <button type="submit" id="submitBtn" class="w-full bg-monotaro-red hover:bg-monotaro-dark text-white font-black text-base py-3.5 px-6 rounded-xl shadow-lg transition duration-200 flex items-center justify-center">
+            <i class="fa-solid fa-paper-plane mr-2"></i> この内容で相談・お問い合わせをする（無料）
+          </button>
+        </form>
+        
+        <div id="successMessage" class="hidden mt-4 p-6 bg-emerald-50 border-2 border-emerald-500 text-emerald-900 rounded-xl text-center font-bold shadow-sm">
+          <i class="fa-solid fa-circle-check text-3xl text-emerald-600 mb-2 block"></i>
+          <p class="text-base">お問い合わせを受け付けました。</p>
+          <p class="text-xs text-emerald-700 font-normal mt-1">ご入力いただいたメールアドレス宛に担当者よりご連絡いたします。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="py-12 bg-slate-100">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-xl sm:text-2xl font-bold text-center text-slate-900 mb-8">
+        モノタロウの輸入手配・現地サポートの特徴
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-300">
+          <div class="w-12 h-12 bg-red-50 text-monotaro-red rounded-lg flex items-center justify-center text-xl font-bold mb-4 border border-red-100">
+            <i class="fa-solid fa-briefcase"></i>
+          </div>
+          <h3 class="font-bold text-lg text-slate-900 mb-2">本社の輸出・出荷業務を手間削減</h3>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            本社の購買担当者様が行っていたインボイス作成や別送手配などの負担を解消。現地法人が直接注文完結できます。
+          </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-300">
+          <div class="w-12 h-12 bg-red-50 text-monotaro-red rounded-lg flex items-center justify-center text-xl font-bold mb-4 border border-red-100">
+            <i class="fa-solid fa-plane-departure"></i>
+          </div>
+          <h3 class="font-bold text-lg text-slate-900 mb-2">航空便＆20日以内出荷（Haryana）</h3>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            倉庫に在庫がある商品は航空便で手配し、**20日以内にHaryana倉庫より出荷**。定期購入品はHaryana倉庫にVMI保管も可能です。
+          </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-300">
+          <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-lg flex items-center justify-center text-xl font-bold mb-4 border border-amber-100">
+            <i class="fa-solid fa-receipt"></i>
+          </div>
+          <h3 class="font-bold text-lg text-slate-900 mb-2">明朗会計＆現地商品も一括対応</h3>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            関税・配送費等コミコミの現地通貨価格。国内調達品だけでなく、Industrybuyingを通じたインド国内流通品もあわせてワンストップ調達が可能です。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-slate-900 text-slate-400 py-8 px-4 border-t border-slate-800 text-center text-xs">
+    <div class="max-w-6xl mx-auto space-y-3">
+      <p class="text-slate-500">※危険物（バッテリー等）など、一部輸入対応ができない商品がございます。可否についてはお問い合わせ時に確認いたします。</p>
+      <p class="text-slate-500">© MonotaRO All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript for Form Submission & Multiple Choice Validation -->
+  <script>
+    let submitted = false;
+    const form = document.getElementById('leadForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const successMessage = document.getElementById('successMessage');
+    const fileInput = document.getElementById('fileInput');
+    const purposeError = document.getElementById('purposeError');
+
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        const checkedPurposes = document.querySelectorAll('.purpose-checkbox:checked');
+        if (checkedPurposes.length === 0) {
+          e.preventDefault();
+          purposeError.classList.remove('hidden');
+          purposeError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return false;
+        } else {
+          purposeError.classList.add('hidden');
+        }
+
+        const file = fileInput.files[0];
+        if (file) {
+          e.preventDefault();
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 送信中...';
+
+          const reader = new FileReader();
+          reader.onload = function(event) {
+            document.getElementById('fileData').value = event.target.result;
+            document.getElementById('fileName').value = file.name;
+            document.getElementById('fileType').value = file.type;
+            
+            submitted = true;
+            form.submit();
+          };
+          reader.readAsDataURL(file);
+        } else {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 送信中...';
+          submitted = true;
+        }
+      });
+    }
+
+    function showSuccess() {
+      if (form && successMessage) {
+        form.reset();
+        form.classList.add('hidden');
+        successMessage.classList.remove('hidden');
+      }
+    }
+  </script>
+
+</body>
+</html>
