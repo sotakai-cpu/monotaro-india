@@ -20,7 +20,7 @@
   <header class="sticky top-0 z-50 bg-monotaro-red text-white shadow-md border-b-2 border-monotaro-dark">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
       <div class="flex items-center space-x-3 bg-white px-3 py-1.5 rounded">
-        <!-- アップロードした新しい基本ロゴ画像 -->
+        <!-- 基本ロゴ画像 -->
         <img src="基本ロゴ余白ありRGB.jpg" alt="モノタロウ" class="h-8 sm:h-10 w-auto object-contain">
       </div>
       <div class="flex items-center space-x-2 sm:space-x-3">
@@ -139,24 +139,27 @@
 
         <form id="leadForm" action="https://script.google.com/a/macros/industrybuying.com/s/AKfycbzzDJic_xfrd0zOVYp7zO6gUiHLQoO-8Z7xNln_YykWeh5LhCHvJMtFLvV9w3_WdnLd/exec" method="POST" target="hidden_iframe" class="space-y-4">
           
-          <!-- ご相談種別の選択 -->
+          <!-- ご相談種別の選択（複数選択可能なチェックボックスに変更） -->
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-2">お問い合わせ・ご相談の目的 <span class="text-red-500">*</span></label>
+            <label class="block text-xs font-bold text-slate-700 mb-1">
+              お問い合わせ・ご相談の目的（複数選択可） <span class="text-red-500">*</span>
+            </label>
+            <p id="purposeError" class="text-xs text-red-600 font-bold hidden mb-2">※少なくとも1つの目的を選択してください。</p>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
               <label class="flex items-center p-3 bg-white border border-slate-300 rounded-lg cursor-pointer hover:border-monotaro-red">
-                <input type="radio" name="purpose" value="まずは一度話を聞いてみたい（相談）" required class="text-monotaro-red focus:ring-monotaro-red mr-2">
+                <input type="checkbox" name="purpose" value="まずは一度話を聞いてみたい（相談）" class="purpose-checkbox text-monotaro-red rounded focus:ring-monotaro-red mr-2">
                 <span class="font-bold text-slate-800">まずは一度話を聞いてみたい（相談）</span>
               </label>
               <label class="flex items-center p-3 bg-white border border-slate-300 rounded-lg cursor-pointer hover:border-monotaro-red">
-                <input type="radio" name="purpose" value="モノタロウ商品の見積・輸入可否確認" required class="text-monotaro-red focus:ring-monotaro-red mr-2">
+                <input type="checkbox" name="purpose" value="モノタロウ商品の見積・輸入可否確認" class="purpose-checkbox text-monotaro-red rounded focus:ring-monotaro-red mr-2">
                 <span class="font-bold text-slate-800">モノタロウ商品の見積・輸入可否確認</span>
               </label>
               <label class="flex items-center p-3 bg-white border border-slate-300 rounded-lg cursor-pointer hover:border-monotaro-red">
-                <input type="radio" name="purpose" value="Excelリスト等からの一括見積り依頼" required class="text-monotaro-red focus:ring-monotaro-red mr-2">
+                <input type="checkbox" name="purpose" value="Excelリスト等からの一括見積り依頼" class="purpose-checkbox text-monotaro-red rounded focus:ring-monotaro-red mr-2">
                 <span class="font-bold text-slate-800">Excelリスト等からの一括見積り依頼</span>
               </label>
               <label class="flex items-center p-3 bg-white border border-slate-300 rounded-lg cursor-pointer hover:border-monotaro-red">
-                <input type="radio" name="purpose" value="現地倉庫（Haryana）での保管・定期配送の相談" required class="text-monotaro-red focus:ring-monotaro-red mr-2">
+                <input type="checkbox" name="purpose" value="現地倉庫（Haryana）での保管・定期配送の相談" class="purpose-checkbox text-monotaro-red rounded focus:ring-monotaro-red mr-2">
                 <span class="font-bold text-slate-800">現地倉庫（Haryana）での保管・定期配送の相談</span>
               </label>
             </div>
@@ -218,15 +221,27 @@
     </div>
   </section>
 
-  <!-- JavaScript for Form Submission & File Handling -->
+  <!-- JavaScript for Form Submission & Multiple Choice Validation -->
   <script>
     let submitted = false;
     const form = document.getElementById('leadForm');
     const submitBtn = document.getElementById('submitBtn');
     const successMessage = document.getElementById('successMessage');
     const fileInput = document.getElementById('fileInput');
+    const purposeError = document.getElementById('purposeError');
 
     form.addEventListener('submit', function(e) {
+      // チェックボックスの選択検証
+      const checkedPurposes = document.querySelectorAll('.purpose-checkbox:checked');
+      if (checkedPurposes.length === 0) {
+        e.preventDefault();
+        purposeError.classList.remove('hidden');
+        purposeError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return false;
+      } else {
+        purposeError.classList.add('hidden');
+      }
+
       const file = fileInput.files[0];
       if (file) {
         e.preventDefault();
