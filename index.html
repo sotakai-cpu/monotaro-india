@@ -9,6 +9,17 @@
   })(window,document,'script','dataLayer','GTM-W9B2TC2T');</script>
   <!-- End Google Tag Manager -->
 
+  <!-- Page View Tracking Event -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      'event': 'page_view',
+      'page_title': 'MonotaRO Direct Import Support | Industrybuying India',
+      'page_location': window.location.href,
+      'language': 'en'
+    });
+  </script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MonotaRO Direct Import Support | Industrybuying India</title>
@@ -120,7 +131,6 @@
       </h2>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Feature 1 -->
         <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 shadow-sm relative">
           <div class="w-12 h-12 bg-amber-100 text-amber-700 rounded-lg flex items-center justify-center text-xl font-bold mb-4">
             <i class="fa-solid fa-tags"></i>
@@ -131,7 +141,6 @@
           </p>
         </div>
 
-        <!-- Feature 2 -->
         <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 shadow-sm relative">
           <div class="w-12 h-12 bg-amber-100 text-amber-700 rounded-lg flex items-center justify-center text-xl font-bold mb-4">
             <i class="fa-solid fa-truck-fast"></i>
@@ -142,7 +151,6 @@
           </p>
         </div>
 
-        <!-- Feature 3 -->
         <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 shadow-sm relative">
           <div class="w-12 h-12 bg-amber-100 text-amber-700 rounded-lg flex items-center justify-center text-xl font-bold mb-4">
             <i class="fa-solid fa-file-invoice-dollar"></i>
@@ -182,7 +190,7 @@
     </div>
   </section>
 
-  <!-- Lead Form Section (Main CTA) -->
+  <!-- Lead Form Section -->
   <section id="inquiry-form" class="py-12 bg-white border-b border-slate-200">
     <div class="max-w-4xl mx-auto px-4">
       <div class="bg-gradient-to-r from-amber-50 via-white to-slate-50 border-2 border-ib-yellow rounded-2xl p-6 sm:p-8 shadow-xl">
@@ -196,12 +204,10 @@
           </p>
         </div>
 
-        <!-- iframe for background submission -->
         <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted){showSuccess();}"></iframe>
 
         <form id="leadForm" action="https://script.google.com/a/macros/industrybuying.com/s/AKfycbzzDJic_xfrd0zOVYp7zO6gUiHLQoO-8Z7xNln_YykWeh5LhCHvJMtFLvV9w3_WdnLd/exec" method="POST" target="hidden_iframe" class="space-y-4">
           
-          <!-- Inquiry Purpose -->
           <div>
             <label class="block text-xs font-bold text-slate-700 mb-1">
               Purpose of Inquiry (Select all that apply) <span class="text-red-500">*</span>
@@ -256,7 +262,6 @@
             <textarea name="content" rows="4" required placeholder="Example:&#10;・Request quote for MonotaRO Code: 12345678 (Qty: 50)&#10;・Looking for alternative Japanese procurement for plant maintenance spares." class="w-full px-3 py-2 text-sm border border-slate-300 rounded focus:ring-2 focus:ring-amber-500 focus:outline-none"></textarea>
           </div>
 
-          <!-- Hidden inputs for file base64 data -->
           <input type="hidden" name="fileData" id="fileData">
           <input type="hidden" name="fileName" id="fileName">
           <input type="hidden" name="fileType" id="fileType">
@@ -291,7 +296,7 @@
     </div>
   </footer>
 
-  <!-- JavaScript for Form Submission -->
+  <!-- Form & Event Tracking JavaScript -->
   <script>
     let submitted = false;
     const form = document.getElementById('leadForm');
@@ -341,6 +346,14 @@
         form.reset();
         form.classList.add('hidden');
         successMessage.classList.remove('hidden');
+
+        // GTM DataLayer Push for Conversion Event
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          'event': 'form_submission',
+          'form_name': 'Inquiry Form EN',
+          'page_location': window.location.href
+        });
       }
     }
   </script>
