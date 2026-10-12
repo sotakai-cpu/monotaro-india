@@ -30,17 +30,21 @@
   <header class="sticky top-0 z-50 bg-monotaro-red text-white shadow-md border-b-2 border-monotaro-dark">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
       <div class="flex items-center space-x-2 sm:space-x-3 bg-white px-2.5 sm:px-3 py-1.5 rounded">
-        <!-- 基本ロゴ画像 -->
-        <img src="基本ロゴ余白ありRGB.jpg" alt="モノタロウ" class="h-7 sm:h-10 w-auto object-contain">
+        <!-- 指定ロゴ画像へ変更 -->
+        <img src="https://static3.industrybuying.com/a-wk/images/webp/mono-logo.webp" alt="モノタロウ" class="h-7 sm:h-10 w-auto object-contain">
       </div>
       <div class="flex items-center space-x-1.5 sm:space-x-3">
+        <!-- 英語サイトへの切替ボタン -->
+        <a href="https://monotaro-india-en.vercel.app/" class="text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 px-2.5 py-1.5 rounded border border-slate-700 transition flex items-center shrink-0">
+          <i class="fa-solid fa-globe mr-1 text-amber-400"></i> EN
+        </a>
         <a href="https://www.monotaro.com/" target="_blank" rel="noopener noreferrer" class="hidden md:inline-flex items-center text-xs font-bold text-slate-800 bg-white hover:bg-slate-100 px-3 py-2 rounded transition shadow-sm">
           <i class="fa-solid fa-arrow-up-right-from-square mr-1.5 text-monotaro-red"></i> モノタロウ(monotaro.com)
         </a>
         <a href="https://www.industrybuying.com/?utm_source=japan" target="_blank" rel="noopener noreferrer" class="hidden md:inline-flex items-center text-xs font-bold text-slate-800 bg-amber-400 hover:bg-amber-300 px-3 py-2 rounded transition shadow-sm">
           <i class="fa-solid fa-store mr-1.5 text-slate-900"></i> インド現地EC(Industrybuying)
         </a>
-        <!-- お問い合わせボタン（モノタロウと同スタイルの白背景・黒文字） -->
+        <!-- お問い合わせボタン -->
         <a href="#inquiry-form" class="bg-white hover:bg-slate-100 text-slate-900 font-bold text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2.5 rounded shadow-sm transition flex items-center shrink-0">
           <i class="fa-solid fa-paper-plane mr-1.5 text-monotaro-red"></i> お問い合わせ
         </a>
@@ -311,7 +315,6 @@
           const reader = new FileReader();
           reader.onload = function(event) {
             document.getElementById('fileData').value = event.target.result;
-            document.getElementById('fileName').value = event.target.result;
             document.getElementById('fileName').value = file.name;
             document.getElementById('fileType').value = file.type;
             
